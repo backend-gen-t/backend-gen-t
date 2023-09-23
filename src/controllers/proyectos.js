@@ -110,6 +110,17 @@ async function postDetour(req, res) {
     await db.beginTransaction()
     try {
         await db.execute("INSERT INTO Desvio(nombreDesvio, fecha, costeEmpleadosDisponibles, costeHorasDisponibles, costePresupuesto, nuevaFechaEntrega, FK_proyectoAsociado, detalle) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Object.values(detour));
+        await db.execute(`
+            UPDATE 
+                Proyecto 
+            SET 
+                fechaEntregaIdeal = ?, 
+                empleadosDisponibles = empleadosDisponibles + ?,
+                horasDisponibles = horasDisponibles + ?,
+                presupuesto = presupuesto + ?;
+            WHERE
+                Proyecto.FK_proyectoAsociado = ?
+        `, [newDeadline, employeeCost, hourCost, budgetCost, req.params.project]);
     } catch (error) {
         await db.rollback()
         return res.status(500).send(error);
