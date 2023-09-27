@@ -122,7 +122,8 @@ async function postDetour(req, res) {
                 Proyecto.FK_proyectoAsociado = ?
         `, [newDeadline, employeeCost, hourCost, budgetCost, req.params.project]);
     } catch (error) {
-        await db.rollback()
+        await db.rollback();
+	console.log(error);
         return res.status(500).send(error);
     }
     await db.commit();

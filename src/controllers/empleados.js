@@ -165,7 +165,7 @@ async function postVacation(req, res) {
         return res.status(400).send(`missing field to`);
     //TODO fix
     try {
-        await db.execute(`INSERT INTO PeticionVacacion(FK_empleado, estado, fechaInicio, fechaFin, diasPedidos) VALUES (?, ?, ?, ?)`, [req.params.employeeId, state, from, to, days]);
+        await db.execute(`INSERT INTO PeticionVacacion(FK_empleado, estado, fechaInicio, fechaFin, diasPedidos) VALUES (?, ?, ?, ?, ?)`, [req.params.employeeId, state, from, to, days]);
     } catch (error) {  
         console.log(error);
         return res.status(500).send(error);
