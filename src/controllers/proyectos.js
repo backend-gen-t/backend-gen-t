@@ -120,7 +120,7 @@ async function postDetour(req, res) {
                 presupuesto = presupuesto + ?;
             WHERE
                 Proyecto.FK_proyectoAsociado = ?
-        `, [newDeadline, employeeCost, hourCost, budgetCost, req.params.project]);
+        `, [newDeadline, employeeCost, hourCost, budgetCost, req.params.projectId]);
     } catch (error) {
         await db.rollback();
 	console.log(error);
